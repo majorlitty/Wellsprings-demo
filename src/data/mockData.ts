@@ -1,9 +1,11 @@
 import { Property, CustomerProject, Milestone, FinancialMilestone, StaffProjectSummary } from '../types';
 
-export const HERO_IMAGE = '/src/assets/images/wellsprings_hero_villa_1793020981143.jpg';
-export const LEKKI_PROPERTY_IMAGE = '/src/assets/images/wellsprings_property_lekki_1793020981562.jpg';
-export const ABUJA_PROPERTY_IMAGE = '/src/assets/images/wellsprings_property_abuja_1793020981884.jpg';
-export const CONSTRUCTION_SITE_IMAGE = '/src/assets/images/wellsprings_construction_site_1793020982696.jpg';
+import HERO_IMAGE from '../assets/images/wellsprings_hero_villa_1793020981143.jpg';
+import LEKKI_PROPERTY_IMAGE from '../assets/images/wellsprings_property_lekki_1793020981562.jpg';
+import ABUJA_PROPERTY_IMAGE from '../assets/images/wellsprings_property_abuja_1793020981884.jpg';
+import CONSTRUCTION_SITE_IMAGE from '../assets/images/wellsprings_construction_site_1793020982696.jpg';
+
+export { HERO_IMAGE, LEKKI_PROPERTY_IMAGE, ABUJA_PROPERTY_IMAGE, CONSTRUCTION_SITE_IMAGE };
 
 export const PROPERTIES: Property[] = [
   {
