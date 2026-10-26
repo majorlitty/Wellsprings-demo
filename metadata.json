@@ -1,0 +1,6 @@
+{
+  "name": "Wellsprings Property Development",
+  "description": "Premium Nigerian real estate and residential construction platform tailored for Nigerians in the diaspora.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
