@@ -9,6 +9,9 @@ export type NavScreen =
 
 export type PortalMode = 'public' | 'customer' | 'staff';
 
+// ============================================================================
+// 1. PROPERTY TYPE
+// ============================================================================
 export interface Property {
   id: string;
   title: string;
@@ -18,6 +21,8 @@ export interface Property {
   priceNgn: number;
   priceGbp: number;
   priceUsd: number;
+  landPriceNgn: number;
+  estimatedConstructionPriceNgn: number;
   category: 'Residential Villa' | 'Serviced Plot' | 'Waterfront Mansion' | 'Semi-Detached Duplex';
   status: 'Available' | 'Under Development' | 'Off-Plan' | 'Sold Out';
   bedrooms?: number;
@@ -31,71 +36,227 @@ export interface Property {
   infrastructure: string[];
 }
 
-export interface Milestone {
+// ============================================================================
+// 2. CUSTOMER TYPE
+// ============================================================================
+export interface Customer {
   id: string;
-  stepNumber: number;
+  clientCode: string;
+  fullName: string;
   title: string;
-  phase: string;
-  status: 'completed' | 'in_progress' | 'upcoming';
-  completionPercentage: number;
-  targetDate: string;
-  completionDate?: string;
-  siteEngineer: string;
-  summary: string;
-  recentLog: string;
-  photosCount: number;
-  inspectorApproved: boolean;
+  email: string;
+  phone: string;
+  diasporaCountry: string; // e.g. "United Kingdom"
+  diasporaCity: string; // e.g. "London"
+  residentialAddressOverseas: string;
+  preferredCurrency: 'NGN' | 'GBP' | 'USD';
+  profileAvatarUrl?: string;
+  relationshipManager: string;
+  joinedDate: string;
 }
 
-export interface FinancialMilestone {
-  id: string;
-  trancheNumber: number;
-  title: string;
-  description: string;
-  amountNgn: number;
-  amountGbp: number;
-  status: 'paid' | 'due' | 'upcoming' | 'in_escrow';
-  invoiceRef: string;
-  dueDate: string;
-  paidDate?: string;
-}
-
-export interface CustomerProject {
+// ============================================================================
+// 3. PROJECT TYPE (with separate land and construction budgets)
+// ============================================================================
+export interface Project {
   id: string;
   projectCode: string;
+  customerId: string;
+  propertyId: string;
   title: string;
   propertyType: string;
   location: string;
-  clientName: string;
-  clientLocation: string; // e.g. London, United Kingdom
-  clientEmail: string;
+  district: string;
+  state: 'Abuja' | 'Lagos' | 'Ogun / Epe';
+  status: 'planning' | 'in_progress' | 'completed' | 'on_hold';
+  currentMilestoneId: string;
+  currentMilestoneName: string;
+  overallProgressPercentage: number;
   startDate: string;
-  estimatedHandover: string;
-  overallProgress: number; // percentage
-  currentMilestoneStage: string;
-  siteSupervisor: string;
-  cctvLiveAvailable: boolean;
+  targetCompletionDate: string;
+  siteSupervisorName: string;
+  siteSupervisorCredentials: string;
+  cctvFeedAvailable: boolean;
+
+  // Separate land & construction budgets (as required by prompt)
+  landBudgetNgn: number;
+  constructionBudgetNgn: number;
   totalBudgetNgn: number;
-  totalBudgetGbp: number;
-  paidToDateNgn: number;
-  paidToDateGbp: number;
-  pendingDueNgn: number;
-  pendingDueGbp: number;
+
+  landPaidNgn: number;
+  constructionPaidNgn: number;
+  totalPaidNgn: number;
+
+  landRemainingNgn: number;
+  constructionRemainingNgn: number;
+  totalRemainingNgn: number;
+
   lastInspectionDate: string;
+  notes: string;
 }
 
-export interface StaffProjectSummary {
+// ============================================================================
+// 4. PAYMENT PLAN TYPE
+// ============================================================================
+export interface PaymentScheduleItem {
   id: string;
-  projectCode: string;
-  clientName: string;
-  diasporaCity: string;
-  projectTitle: string;
-  location: string;
-  stage: string;
-  progressPercent: number;
-  health: 'On Track' | 'Attention Required' | 'Ahead of Schedule';
-  assignedEngineer: string;
-  lastUpdateDate: string;
-  nextMilestoneDeadline: string;
-  unpaidMilestoneNgn: number;
+  trancheNumber: number;
+  category: 'land' | 'construction';
+  title: string;
+  milestoneTrigger: string;
+  percentageOfBudget: number;
+  amountNgn: number;
+  amountGbp: number;
+  dueDate: string;
+  paidDate?: string;
+  status: 'paid' | 'due' | 'upcoming';
+  invoiceReference: string;
+}
+
+export interface PaymentPlan {
+  id: string;
+  projectId: string;
+  totalAmountNgn: number;
+  landPortionNgn: number;
+  constructionPortionNgn: number;
+  totalTranches: number;
+  currencyPreference: 'NGN' | 'GBP' | 'USD';
+  schedule: PaymentScheduleItem[];
+  escrowPolicyNotes: string;
+}
+
+// ============================================================================
+// 5. PAYMENT RECORD TYPE
+// ============================================================================
+export interface PaymentRecord {
+  id: string;
+  paymentReference: string;
+  projectId: string;
+  customerId: string;
+  category: 'land' | 'construction';
+  trancheNumber?: number;
+  milestoneTitle: string;
+  amountNgn: number;
+  amountGbp: number;
+  amountUsd: number;
+  paymentDate: string;
+  paymentMethod:
+    | 'UK Direct Bank Wire (GBP)'
+    | 'US International Wire (USD)'
+    | 'CBN Nostro FX Remittance'
+    | 'Standard Chartered Escrow Transfer'
+    | 'Zenith Bank Diaspora Direct Transfer';
+  originatingBank: string;
+  beneficiaryAccount: string;
+  channelReference: string;
+  receiptNumber: string;
+  status: 'confirmed_cleared' | 'processing_in_escrow' | 'pending_verification';
+  certifiedBy: string;
+  illustrativeNote: string;
+}
+
+// ============================================================================
+// 6. CONSTRUCTION MILESTONE TYPE (The 5 Milestones: Foundation, Blockwork, Roofing, Finishes, Completion)
+// ============================================================================
+export type MilestoneCode =
+  | 'foundation'
+  | 'blockwork'
+  | 'roofing'
+  | 'finishes'
+  | 'completion';
+
+export interface ConstructionMilestone {
+  id: string;
+  projectId: string;
+  stepNumber: number; // 1 to 5
+  milestoneCode: MilestoneCode;
+  name: 'Foundation' | 'Blockwork' | 'Roofing' | 'Finishes' | 'Completion';
+  title: string;
+  phaseSummary: string;
+  status: 'completed' | 'in_progress' | 'upcoming';
+  progressPercentage: number; // 0 to 100
+  plannedStartDate: string;
+  plannedEndDate: string;
+  actualStartDate?: string;
+  actualEndDate?: string;
+  allocatedConstructionBudgetNgn: number;
+  disbursedAmountNgn: number;
+  keyEngineeringDeliverables: string[];
+  engineerSignOff: {
+    certified: boolean;
+    engineerName: string;
+    corenRegistration: string;
+    signOffDate?: string;
+    cubeStrengthMpa?: number; // e.g. 34.2
+  };
+}
+
+// ============================================================================
+// 7. PROGRESS UPDATE & PHOTO REFERENCES
+// ============================================================================
+export interface ProgressPhoto {
+  id: string;
+  url: string;
+  caption: string;
+  timestamp: string;
+  tags: string[];
+  gpsLocation: string;
+}
+
+export interface ProgressUpdate {
+  id: string;
+  projectId: string;
+  milestoneId: string;
+  milestoneName: string;
+  updateDate: string;
+  title: string;
+  narrative: string;
+  engineerName: string;
+  engineerRole: string;
+  inspectionType:
+    | 'Soil & Raft Foundation Verification'
+    | 'Reinforced Column & Blockwork Audit'
+    | 'Roof Truss & Membrane Inspection'
+    | 'Mechanical & Electrical Rough-In Inspection'
+    | 'Finishing & Pre-Handover Snagging';
+  photoReferences: ProgressPhoto[];
+  qaStatus: 'Passed' | 'Action Item Resolved' | 'Under Observation';
+}
+
+// ============================================================================
+// 8. PROPERTY ENQUIRY TYPE
+// ============================================================================
+export interface PropertyEnquiry {
+  id: string;
+  propertyId: string;
+  propertyTitle: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  diasporaCountry: string;
+  diasporaCity?: string;
+  interestType: 'Outright Purchase & Construction' | 'Land Acquisition Only' | 'Custom Villa Build';
+  proposedTimeline: string;
+  budgetRange?: string;
+  message: string;
+  submittedAt: string;
+  status: 'new' | 'contacted' | 'consultation_scheduled' | 'dossier_sent';
+  notes?: string;
+}
+
+// ============================================================================
+// COMPLETE SHARED APP DEMO STATE
+// ============================================================================
+export interface AppDemoData {
+  properties: Property[];
+  customer: Customer;
+  project: Project;
+  paymentPlan: PaymentPlan;
+  paymentRecords: PaymentRecord[];
+  milestones: ConstructionMilestone[];
+  progressUpdates: ProgressUpdate[];
+  enquiries: PropertyEnquiry[];
+  isDemoData: boolean;
+  illustrativeDisclaimer: string;
+  lastUpdated: string;
 }

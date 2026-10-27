@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export const PropertyDetailPage: React.FC = () => {
-  const { selectedProperty, navigateTo, currency } = useApp();
+  const { selectedProperty, navigateTo, currency, addEnquiry } = useApp();
   const [enquirySubmitted, setEnquirySubmitted] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -32,6 +32,17 @@ export const PropertyDetailPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    addEnquiry({
+      propertyId: selectedProperty.id,
+      propertyTitle: selectedProperty.title,
+      fullName: formData.fullName || 'Diaspora Investor',
+      email: formData.email || 'investor@example.com',
+      phone: formData.phone || '+44 20 7946 0991',
+      diasporaCountry: formData.diasporaCountry,
+      interestType: formData.interestType as any,
+      proposedTimeline: 'Within 6 months',
+      message: formData.message || 'Requesting verified title deed packet and turn-key construction estimate.',
+    });
     setEnquirySubmitted(true);
   };
 
@@ -221,18 +232,27 @@ export const PropertyDetailPage: React.FC = () => {
             </div>
 
             {enquirySubmitted ? (
-              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-5 text-center space-y-2">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-5 text-center space-y-2.5">
                 <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto" />
                 <p className="text-sm font-bold text-emerald-900">Enquiry Successfully Logged</p>
                 <p className="text-xs text-emerald-700">
-                  Thank you! Our Diaspora Client Director will reach out to you within 24 hours with the title dossier and milestone schedule.
+                  Thank you! Your enquiry has been registered in the shared application demo state.
                 </p>
-                <button
-                  onClick={() => setEnquirySubmitted(false)}
-                  className="mt-3 text-xs text-emerald-800 underline hover:text-emerald-950 font-medium cursor-pointer"
-                >
-                  Send another request
-                </button>
+                <div className="pt-2 flex flex-col gap-2">
+                  <button
+                    onClick={() => navigateTo('staff-management')}
+                    className="w-full py-2 px-3 text-xs font-semibold bg-emerald-800 text-white rounded-lg hover:bg-emerald-900 transition flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <span>View in Screen 7 (Staff Management Leads)</span>
+                    <ArrowLeft className="w-3.5 h-3.5 rotate-180" />
+                  </button>
+                  <button
+                    onClick={() => setEnquirySubmitted(false)}
+                    className="text-xs text-emerald-800 underline hover:text-emerald-950 font-medium cursor-pointer"
+                  >
+                    Send another request
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3.5 text-xs">

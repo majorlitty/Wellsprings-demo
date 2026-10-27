@@ -6,12 +6,12 @@ import { useApp } from '../context/AppContext';
 import { Search, Filter, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 
 export const ListingsPage: React.FC = () => {
-  const { currency } = useApp();
+  const { currency, properties } = useApp();
   const [selectedState, setSelectedState] = useState<string>('All');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const filteredProperties = PROPERTIES.filter((property) => {
+  const filteredProperties = properties.filter((property) => {
     const matchesState = selectedState === 'All' || property.state.toLowerCase().includes(selectedState.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || property.category === selectedCategory;
     const matchesQuery =
