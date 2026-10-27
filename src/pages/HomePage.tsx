@@ -236,10 +236,7 @@ export const HomePage: React.FC = () => {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14 opacity-80 grayscale hover:grayscale-0 transition-all duration-300">
-          <div className="flex items-center gap-2 font-display font-bold text-sm text-neutral-800 tracking-tight">
-            <ShieldCheck className="w-5 h-5 text-amber-600" />
-            <span>COREN REGULATED</span>
-          </div>
+          
 
           <div className="flex items-center gap-2 font-display font-bold text-sm text-neutral-800 tracking-tight">
             <Building2 className="w-5 h-5 text-amber-600" />
@@ -331,7 +328,41 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          4. SPLIT FEATURE 1 (Fluxy "Build a website without building it yourself!")
+          4. FEATURED LAND & RESIDENTIAL DEVELOPMENTS
+          ========================================================================= */}
+      <section className="max-w-6xl mx-auto px-6 py-6 space-y-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-700 font-sans block">
+              Curated Diaspora Portfolio
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-950 font-display tracking-tight">
+              Featured Land & Residential Developments
+            </h2>
+            <p className="text-sm text-stone-600 max-w-xl font-sans">
+              Prime developments across Lekki, Guzape Abuja, and the Ketu-Epe coastal corridor with 100% verified registered titles.
+            </p>
+          </div>
+
+          <button
+            onClick={() => navigateTo('listings')}
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-white bg-neutral-950 rounded-lg hover:bg-neutral-800 transition-colors whitespace-nowrap self-start md:self-auto cursor-pointer group shadow-xs"
+          >
+            <span>View All Properties</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </button>
+        </div>
+
+        {/* 3 Featured Properties Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+          {properties.map((property) => (
+            <PropertyCard key={property.id} property={property} />
+          ))}
+        </div>
+      </section>
+
+      {/* =========================================================================
+          5. SPLIT FEATURE 1 (Fluxy "Build a website without building it yourself!")
           ========================================================================= */}
       <section className="max-w-6xl mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -633,40 +664,6 @@ export const HomePage: React.FC = () => {
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          8. FEATURED LAND & RESIDENTIAL DEVELOPMENTS
-          ========================================================================= */}
-      <section className="max-w-6xl mx-auto px-6 py-6 space-y-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-700 font-sans block">
-              Curated Diaspora Portfolio
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-950 font-display tracking-tight">
-              Featured Land & Residential Developments
-            </h2>
-            <p className="text-sm text-stone-600 max-w-xl font-sans">
-              Prime developments across Lekki, Guzape Abuja, and the Ketu-Epe coastal corridor with 100% verified registered titles.
-            </p>
-          </div>
-
-          <button
-            onClick={() => navigateTo('listings')}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-white bg-neutral-950 rounded-lg hover:bg-neutral-800 transition-colors whitespace-nowrap self-start md:self-auto cursor-pointer group shadow-xs"
-          >
-            <span>View All Properties</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </button>
-        </div>
-
-        {/* 3 Featured Properties Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-          {properties.map((property) => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
         </div>
       </section>
 
