@@ -116,38 +116,38 @@ export const PropertyDetailPage: React.FC = () => {
           </div>
 
           {/* Core Specs Bar */}
-          <div className="grid grid-cols-3 gap-4 p-4 bg-stone-100/80 rounded-xl border border-stone-200">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 p-3 sm:p-4 bg-stone-100/80 rounded-xl border border-stone-200">
             {selectedProperty.bedrooms ? (
               <div className="text-center">
-                <span className="text-[11px] text-stone-500 uppercase font-medium block">Bedrooms</span>
-                <span className="text-lg font-bold text-neutral-900 tabular-nums">
+                <span className="text-[10px] sm:text-[11px] text-stone-500 uppercase font-medium block">Bedrooms</span>
+                <span className="text-sm sm:text-lg font-bold text-neutral-900 tabular-nums">
                   {selectedProperty.bedrooms} Ensuite
                 </span>
               </div>
             ) : (
               <div className="text-center">
-                <span className="text-[11px] text-stone-500 uppercase font-medium block">Zoning</span>
-                <span className="text-lg font-bold text-neutral-900">Residential</span>
+                <span className="text-[10px] sm:text-[11px] text-stone-500 uppercase font-medium block">Zoning</span>
+                <span className="text-sm sm:text-lg font-bold text-neutral-900">Residential</span>
               </div>
             )}
 
             {selectedProperty.bathrooms ? (
-              <div className="text-center border-x border-stone-200">
-                <span className="text-[11px] text-stone-500 uppercase font-medium block">Bathrooms</span>
-                <span className="text-lg font-bold text-neutral-900 tabular-nums">
+              <div className="text-center border-x border-stone-200 px-1">
+                <span className="text-[10px] sm:text-[11px] text-stone-500 uppercase font-medium block">Bathrooms</span>
+                <span className="text-sm sm:text-lg font-bold text-neutral-900 tabular-nums">
                   {selectedProperty.bathrooms} Luxury
                 </span>
               </div>
             ) : (
-              <div className="text-center border-x border-stone-200">
-                <span className="text-[11px] text-stone-500 uppercase font-medium block">Topography</span>
-                <span className="text-lg font-bold text-neutral-900">100% Dry Land</span>
+              <div className="text-center border-x border-stone-200 px-1">
+                <span className="text-[10px] sm:text-[11px] text-stone-500 uppercase font-medium block">Topography</span>
+                <span className="text-sm sm:text-lg font-bold text-neutral-900">Dry Land</span>
               </div>
             )}
 
             <div className="text-center">
-              <span className="text-[11px] text-stone-500 uppercase font-medium block">Plot Extent</span>
-              <span className="text-lg font-bold text-neutral-900 tabular-nums">
+              <span className="text-[10px] sm:text-[11px] text-stone-500 uppercase font-medium block">Plot Extent</span>
+              <span className="text-sm sm:text-lg font-bold text-neutral-900 tabular-nums">
                 {selectedProperty.landSizeSqm} SQM
               </span>
             </div>

@@ -90,11 +90,11 @@ export const ListingsPage: React.FC = () => {
           </div>
 
           {/* Category Filter */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-700 focus:outline-none focus:border-amber-600 cursor-pointer"
+              className="w-full sm:w-auto px-3 py-2 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-700 focus:outline-none focus:border-amber-600 cursor-pointer"
             >
               <option value="All">All Property Types</option>
               <option value="Residential Villa">Residential Villa</option>
@@ -105,7 +105,7 @@ export const ListingsPage: React.FC = () => {
       </div>
 
       {/* Property Results Counter */}
-      <div className="flex items-center justify-between text-xs text-stone-500">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-xs text-stone-500">
         <span>
           Showing <strong className="text-neutral-900">{filteredProperties.length}</strong> verified properties
         </span>

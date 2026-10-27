@@ -126,7 +126,7 @@ export const Footer: React.FC = () => {
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-400">
           <p>© {new Date().getFullYear()} Wellsprings Property Development Ltd. All rights reserved.</p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-6 text-center">
             <span className="hover:text-stone-300">Title Due Diligence Guarantee</span>
             <span aria-hidden="true">·</span>
             <span className="hover:text-stone-300">Milestone Escrow Policy</span>

@@ -147,7 +147,7 @@ export const StaffManagementPage: React.FC = () => {
 
       {/* VIEW 1: PROJECTS TABLE */}
       {activeStaffView === 'projects' && (
-        <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden space-y-4 p-6">
+        <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden space-y-4 p-4 sm:p-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h2 className="text-base font-bold text-neutral-900">
@@ -159,22 +159,22 @@ export const StaffManagementPage: React.FC = () => {
             </div>
 
             {/* Search & Health Filter */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="relative">
+            <div className="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+              <div className="relative flex-1 sm:flex-initial">
                 <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search project or client..."
-                  className="pl-8 pr-3 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-amber-600 w-44 sm:w-56"
+                  className="w-full sm:w-56 pl-8 pr-3 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-amber-600"
                 />
               </div>
 
               <select
                 value={filterHealth}
                 onChange={(e) => setFilterHealth(e.target.value)}
-                className="px-3 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-700 focus:outline-none focus:border-amber-600 cursor-pointer"
+                className="w-full sm:w-auto px-3 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-lg text-stone-700 focus:outline-none focus:border-amber-600 cursor-pointer"
               >
                 <option value="All">All Health Statuses</option>
                 <option value="On Track">On Track</option>
@@ -185,7 +185,7 @@ export const StaffManagementPage: React.FC = () => {
           </div>
 
           {/* Table */}
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-xs">
               <thead className="bg-stone-50 border-y border-stone-200 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
                 <tr>
@@ -279,7 +279,7 @@ export const StaffManagementPage: React.FC = () => {
 
       {/* VIEW 2: INBOUND DIASPORA ENQUIRIES (Shared State Demonstration) */}
       {activeStaffView === 'enquiries' && (
-        <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden space-y-4 p-6">
+        <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden space-y-4 p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h2 className="text-base font-bold text-neutral-900 flex items-center gap-2">
@@ -295,7 +295,7 @@ export const StaffManagementPage: React.FC = () => {
             </span>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-xs">
               <thead className="bg-stone-50 border-y border-stone-200 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
                 <tr>

@@ -39,12 +39,12 @@ export const HomePage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <PlaceholderNotice
           screenNumber={1}
-          screenName="Public Home Page (Redesigned to Fluxy Layout)"
+          screenName="Public Home Page"
           roleScope="Public Website"
-          description="Redesigned to faithfully reflect the Fluxy Framer landing page layout — featuring centered value proposition, interactive floating mockup banner, accreditation badges, 3-column features, zig-zag split feature blocks, 2x2 transparency bento, Featured Land & Residential Developments portfolio cards, and final conversion CTA. Powered by the Manrope (Headings) and Inter (Body) font pairing."
+          description="Featuring centered value proposition, interactive floating mockup banner, accreditation badges, 3-column features, zig-zag split feature blocks, 2x2 transparency bento, Featured Land & Residential Developments portfolio cards, and final conversion CTA. Powered by the Manrope (Headings) and Inter (Body) font pairing."
           currentFoundationFeatures={[
             'Manrope & Inter typography hierarchy applied across headings and body',
-            'Fluxy-style centered hero with floating status and milestone cards',
+            'Centered hero with floating status and milestone cards',
             'Accreditation logo strip (COREN, NIA, NIQS, FCDA, Lagos Lands)',
             '3-column feature cards with custom geometric icons',
             '3 alternating split-column capability deep dives with floating badges',
@@ -62,11 +62,11 @@ export const HomePage: React.FC = () => {
       </div>
 
       {/* =========================================================================
-          1. HERO SECTION (Fluxy Centered Layout + Floating Canvas)
+          1. HERO SECTION (Centered Layout + Floating Canvas)
           ========================================================================= */}
-      <section className="max-w-5xl mx-auto px-6 text-center space-y-6 pt-4">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-5 sm:space-y-6 pt-2 sm:pt-4">
         {/* Main Headline */}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 font-display leading-[1.12]">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 font-display leading-[1.12]">
           Building in Nigeria Made Certain
         </h1>
 
@@ -112,7 +112,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* =========================================================================
-            Wide Floating Graphic Showcase (Matching Fluxy Hero Canvas)
+            Wide Floating Graphic Showcase (Matching Hero Canvas)
             ========================================================================= */}
         <div className="mt-12 relative rounded-2xl overflow-hidden border border-stone-200/90 shadow-xl bg-gradient-to-br from-amber-50/50 via-stone-100 to-amber-100/30 p-4 sm:p-8 md:p-12">
           {/* Subtle Background Architectural Render */}
@@ -228,7 +228,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          2. ACCREDITATION & TRUST STRIP (Fluxy "Loved by world's best" row)
+          2. ACCREDITATION & TRUST STRIP 
           ========================================================================= */}
       <section className="max-w-6xl mx-auto px-6 text-center space-y-6 pt-4">
         <p className="text-xs font-semibold uppercase tracking-wider text-stone-500 font-sans">
@@ -266,7 +266,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          3. "WHY WELLSPRINGS" 3-COLUMN FEATURE GRID (Fluxy 3-Col layout)
+          3. "WHY WELLSPRINGS" 3-COLUMN FEATURE GRID 
           ========================================================================= */}
       <section className="max-w-6xl mx-auto px-6 text-center space-y-12 pt-8">
         <div className="space-y-3">
@@ -362,7 +362,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          5. SPLIT FEATURE 1 (Fluxy "Build a website without building it yourself!")
+          5. SPLIT FEATURE 1 
           ========================================================================= */}
       <section className="max-w-6xl mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -422,8 +422,8 @@ export const HomePage: React.FC = () => {
               />
             </div>
 
-            {/* Floating Client Badge Overlay (Matches Fluxy persona card) */}
-            <div className="absolute -bottom-6 -left-4 sm:left-6 bg-white/95 backdrop-blur-md p-4 rounded-xl border border-stone-200/90 shadow-xl max-w-xs text-xs space-y-1">
+            {/* Floating Client Badge Overlay */}
+            <div className="mt-3 sm:mt-0 sm:absolute sm:-bottom-6 sm:left-6 bg-white/95 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-stone-200/90 shadow-lg sm:max-w-xs text-xs space-y-1">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-neutral-900 font-display">
                   Dr. Olanrewaju Adeyemi
@@ -442,7 +442,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          5. SPLIT FEATURE 2 (Fluxy "Grover increased sales revenue" - Image Left, Content Right)
+          5. SPLIT FEATURE 2 
           ========================================================================= */}
       <section className="max-w-6xl mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -457,7 +457,7 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Floating Metric Badge */}
-            <div className="absolute -bottom-6 -right-4 sm:right-6 bg-neutral-950 text-white p-4 rounded-xl border border-neutral-800 shadow-xl max-w-xs text-xs space-y-1">
+            <div className="mt-3 sm:mt-0 sm:absolute sm:-bottom-6 sm:right-6 bg-neutral-950 text-white p-3.5 sm:p-4 rounded-xl border border-neutral-800 shadow-lg sm:max-w-xs text-xs space-y-1">
               <span className="text-[10px] uppercase font-semibold text-amber-400 block tracking-wider">
                 Independent QA Sign-Off
               </span>
@@ -479,7 +479,7 @@ export const HomePage: React.FC = () => {
               Over 80 diaspora families completed their dream homes without a single proxy dispute.
             </h2>
 
-            {/* Quote Block (Matches Fluxy quotation block) */}
+            {/* Quote Block  */}
             <div className="p-4 bg-stone-50 rounded-xl border border-stone-200/80 italic text-xs sm:text-sm text-stone-700 leading-relaxed space-y-2">
               <p>
                 "We lost over $45,000 to family intermediaries before finding Wellsprings.
@@ -507,7 +507,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          6. SPLIT FEATURE 3 (Fluxy "App is here to make life easier for you.")
+          6. SPLIT FEATURE 3 
           ========================================================================= */}
       <section className="max-w-6xl mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -567,8 +567,8 @@ export const HomePage: React.FC = () => {
               />
             </div>
 
-            {/* Floating Metric Card (Matches Fluxy "Projected Revenue $34.5k MRR" card) */}
-            <div className="absolute -bottom-6 -left-4 sm:left-6 bg-white/95 backdrop-blur-md p-4 rounded-xl border border-stone-200/90 shadow-xl max-w-xs text-xs space-y-1">
+            {/* Floating Metric Card  */}
+            <div className="mt-3 sm:mt-0 sm:absolute sm:-bottom-6 sm:left-6 bg-white/95 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-stone-200/90 shadow-lg sm:max-w-xs text-xs space-y-1">
               <span className="text-[10px] uppercase font-semibold text-stone-400 block tracking-wider">
                 Projected Handover
               </span>
@@ -584,7 +584,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          7. 2x2 BENTO FEATURE GRID (Fluxy "Unlimited options give you flexibility")
+          7. 2x2 BENTO FEATURE GRID 
           ========================================================================= */}
       <section className="max-w-6xl mx-auto px-6 text-center space-y-10 py-10">
         <div className="space-y-3">
@@ -668,7 +668,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          9. PRE-FOOTER CONVERSION BLOCK (Fluxy "The ultimate theme" CTA)
+          9. PRE-FOOTER CONVERSION BLOCK 
           ========================================================================= */}
       <section className="max-w-5xl mx-auto px-6 text-center space-y-6 pt-6">
         <span className="text-xs font-bold uppercase tracking-wider text-amber-700 font-sans block">

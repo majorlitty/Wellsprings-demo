@@ -188,39 +188,39 @@ export const FinancialOverviewPage: React.FC = () => {
       </div>
 
       {/* Tabs: Contractual Milestone Schedule vs Actual Payment Records */}
-      <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden space-y-4 p-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-100 pb-4">
-          <div className="flex items-center gap-2">
+      <div className="bg-white rounded-2xl border border-stone-200 shadow-xs overflow-hidden space-y-4 p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-100 pb-4">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full sm:w-auto">
             <button
               onClick={() => setActiveLedgerTab('schedule')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex-1 sm:flex-initial text-center ${
                 activeLedgerTab === 'schedule'
                   ? 'bg-neutral-900 text-white'
                   : 'bg-stone-100 text-stone-600 hover:text-neutral-900'
               }`}
             >
-              Contractual Milestone Schedule (6 Tranches)
+              Milestone Schedule (6 Tranches)
             </button>
             <button
               onClick={() => setActiveLedgerTab('records')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer flex-1 sm:flex-initial text-center ${
                 activeLedgerTab === 'records'
                   ? 'bg-neutral-900 text-white'
                   : 'bg-stone-100 text-stone-600 hover:text-neutral-900'
               }`}
             >
-              Diaspora Payment Records ({paymentRecords.length} Cleared)
+              Payment Records ({paymentRecords.length} Cleared)
             </button>
           </div>
 
           <span className="text-[11px] text-stone-500 italic">
-            * All amounts & references are illustrative simulations for demonstration
+            * All figures are illustrative demo simulations
           </span>
         </div>
 
         {/* Tab 1: Contractual Payment Schedule */}
         {activeLedgerTab === 'schedule' && (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-xs">
               <thead className="bg-stone-50 border-y border-stone-200 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
                 <tr>
@@ -305,7 +305,7 @@ export const FinancialOverviewPage: React.FC = () => {
 
         {/* Tab 2: Actual Diaspora Payment Records */}
         {activeLedgerTab === 'records' && (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
             <table className="w-full text-left text-xs">
               <thead className="bg-stone-50 border-y border-stone-200 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
                 <tr>

@@ -79,7 +79,7 @@ export const ConstructionProgressPage: React.FC = () => {
         </div>
 
         {/* Milestone Filter Segmented Buttons */}
-        <div className="flex items-center gap-1 p-1 bg-stone-100 rounded-lg border border-stone-200 text-xs self-start md:self-auto">
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-1 p-1 bg-stone-100 rounded-lg border border-stone-200 text-xs self-start md:self-auto max-w-full overflow-x-auto scrollbar-none">
           <button
             onClick={() => setFilterPhase('all')}
             className={`px-3 py-1.5 rounded-md font-medium transition cursor-pointer ${
@@ -210,7 +210,7 @@ export const ConstructionProgressPage: React.FC = () => {
 
         {/* Right Detail Pane (5 Cols): Deep Inspection Audit */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-5 sticky top-28">
+          <div className="bg-white p-4 sm:p-6 rounded-2xl border border-stone-200 shadow-xs space-y-5 lg:sticky lg:top-24">
             <div className="flex items-center justify-between pb-3 border-b border-stone-100">
               <span className="text-xs font-semibold uppercase tracking-wider text-amber-800">
                 Inspection Detail · Stage 0{activeMilestone.stepNumber}: {activeMilestone.name}
