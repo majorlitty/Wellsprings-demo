@@ -637,9 +637,10 @@ export const SEED_ENQUIRIES: PropertyEnquiry[] = [
     interestType: 'Outright Purchase & Construction',
     proposedTimeline: 'Within 3 months',
     budgetRange: '£200k - £250k',
+    paymentPreference: 'Milestone Escrow Tranches (GBP)',
     message:
       'We are looking for a hilltop residence in Abuja with independent solar power and verified FCDA title. Please send the survey beacon plan and milestone payment terms.',
-    submittedAt: '24 October 2026, 14:15 BST',
+    submittedAt: '24 Oct 2026, 14:15 BST',
     status: 'consultation_scheduled',
     notes: 'Virtual Zoom consultation scheduled with London Diaspora Director on Thursday.'
   },
@@ -655,9 +656,10 @@ export const SEED_ENQUIRIES: PropertyEnquiry[] = [
     interestType: 'Custom Villa Build',
     proposedTimeline: '6 - 12 months',
     budgetRange: '$250k - $300k',
+    paymentPreference: 'Staged Construction Drawdowns (USD)',
     message:
       'Interested in the 4-bedroom detached villa in Lekki Phase 1. Would like to review the Governor’s Consent dossier and understand the remote drone inspection schedule.',
-    submittedAt: '25 October 2026, 09:30 EST',
+    submittedAt: '25 Oct 2026, 09:30 EST',
     status: 'dossier_sent',
     notes: 'Legal dossier and 3D architectural deck dispatched via secure email.'
   },
@@ -673,9 +675,10 @@ export const SEED_ENQUIRIES: PropertyEnquiry[] = [
     interestType: 'Land Acquisition Only',
     proposedTimeline: 'Immediate purchase',
     budgetRange: 'CAD 60k - 80k',
+    paymentPreference: 'Outright Wire Transfer (CAD)',
     message:
       'Seeking to bank 2 waterfront serviced plots in Epe for future residential construction. Please confirm allocation timeline and perimeter fencing status.',
-    submittedAt: '26 October 2026, 11:05 EDT',
+    submittedAt: '26 Oct 2026, 11:05 EDT',
     status: 'new',
     notes: 'New enquiry awaiting assignment to diaspora conveyancing manager.'
   }

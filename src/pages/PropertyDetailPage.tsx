@@ -27,6 +27,8 @@ export const PropertyDetailPage: React.FC = () => {
     phone: '',
     diasporaCountry: 'United Kingdom',
     interestType: 'Outright Purchase & Construction',
+    budgetRange: '£200,000 - £300,000',
+    paymentPreference: 'Milestone Escrow Tranches (GBP)',
     message: '',
   });
 
@@ -41,6 +43,8 @@ export const PropertyDetailPage: React.FC = () => {
       diasporaCountry: formData.diasporaCountry,
       interestType: formData.interestType as any,
       proposedTimeline: 'Within 6 months',
+      budgetRange: formData.budgetRange,
+      paymentPreference: formData.paymentPreference,
       message: formData.message || 'Requesting verified title deed packet and turn-key construction estimate.',
     });
     setEnquirySubmitted(true);
@@ -306,6 +310,36 @@ export const PropertyDetailPage: React.FC = () => {
                     placeholder="+44 7911 123456"
                     className="w-full px-3 py-2 bg-white border border-stone-200 rounded-lg focus:outline-none focus:border-amber-600"
                   />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-stone-700 font-medium mb-1">Estimated Budget Range</label>
+                    <select
+                      value={formData.budgetRange}
+                      onChange={(e) => setFormData({ ...formData, budgetRange: e.target.value })}
+                      className="w-full px-3 py-2 bg-white border border-stone-200 rounded-lg focus:outline-none focus:border-amber-600"
+                    >
+                      <option value="£150,000 - £200,000">£150,000 - £200,000</option>
+                      <option value="£200,000 - £300,000">£200,000 - £300,000</option>
+                      <option value="£300,000 - £500,000">£300,000 - £500,000</option>
+                      <option value="$250,000 - $350,000">$250,000 - $350,000</option>
+                      <option value="Above $500,000">Above $500,000</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-stone-700 font-medium mb-1">Payment Preference</label>
+                    <select
+                      value={formData.paymentPreference}
+                      onChange={(e) => setFormData({ ...formData, paymentPreference: e.target.value })}
+                      className="w-full px-3 py-2 bg-white border border-stone-200 rounded-lg focus:outline-none focus:border-amber-600"
+                    >
+                      <option value="Milestone Escrow Tranches (GBP)">Milestone Escrow Tranches (GBP)</option>
+                      <option value="Staged Construction Drawdowns (USD)">Staged Construction Drawdowns (USD)</option>
+                      <option value="Outright Bank Wire (NGN / FX)">Outright Bank Wire (NGN / FX)</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>

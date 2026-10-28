@@ -46,6 +46,25 @@ interface AppContextType {
   // Mutators & Reset
   resetDemoData: () => void;
   addEnquiry: (enquiry: Omit<PropertyEnquiry, 'id' | 'submittedAt' | 'status'>) => void;
+  updateEnquiryStatus: (enquiryId: string, status: PropertyEnquiry['status']) => void;
+  updateMilestone: (
+    milestoneId: string,
+    updates: {
+      status: 'completed' | 'in_progress' | 'upcoming';
+      progressPercentage: number;
+      plannedEndDate?: string;
+      actualEndDate?: string;
+    }
+  ) => void;
+  addProgressUpdate: (update: Omit<ProgressUpdate, 'id'>) => void;
+  addPaymentRecord: (payment: Omit<PaymentRecord, 'id'>) => void;
+  updatePaymentRecord: (
+    paymentId: string,
+    updates: {
+      status: PaymentRecord['status'];
+      illustrativeNote?: string;
+    }
+  ) => void;
   isResetNotificationVisible: boolean;
   dismissResetNotification: () => void;
 }
@@ -174,6 +193,230 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     []
   );
 
+  // Action: Update enquiry status (staff action)
+  const updateEnquiryStatus = useCallback(
+    (enquiryId: string, status: PropertyEnquiry['status']) => {
+      setDemoData((prev) => ({
+        ...prev,
+        enquiries: prev.enquiries.map((enq) =>
+          enq.id === enquiryId ? { ...enq, status } : enq
+        ),
+        lastUpdated: new Date().toISOString(),
+      }));
+    },
+    []
+  );
+
+  // Action: Update milestone status, percentage, and target date (staff action)
+  // Ensures validation between 0-100 and keeps overall construction progress strictly consistent
+  const updateMilestone = useCallback(
+    (
+      milestoneId: string,
+      updates: {
+        status: 'completed' | 'in_progress' | 'upcoming';
+        progressPercentage: number;
+        plannedEndDate?: string;
+        actualEndDate?: string;
+      }
+    ) => {
+      setDemoData((prev) => {
+        const updatedMilestones = prev.milestones.map((m) => {
+          if (m.id !== milestoneId) return m;
+
+          let finalPercentage = Math.max(0, Math.min(100, Math.round(updates.progressPercentage)));
+          let finalStatus = updates.status;
+          let finalActualEndDate = updates.actualEndDate || m.actualEndDate;
+
+          // Consistency enforcement:
+          if (finalStatus === 'completed') {
+            finalPercentage = 100;
+            if (!finalActualEndDate) {
+              finalActualEndDate = new Date().toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+              });
+            }
+          } else if (finalStatus === 'upcoming') {
+            finalPercentage = 0;
+            finalActualEndDate = undefined;
+          } else if (finalStatus === 'in_progress') {
+            if (finalPercentage === 0) finalPercentage = 10;
+            if (finalPercentage === 100) finalPercentage = 95;
+            finalActualEndDate = undefined;
+          }
+
+          return {
+            ...m,
+            status: finalStatus,
+            progressPercentage: finalPercentage,
+            plannedEndDate: updates.plannedEndDate || m.plannedEndDate,
+            actualEndDate: finalActualEndDate,
+          };
+        });
+
+        // Reconcile overall construction progress dynamically from milestones
+        const totalConstructionBudget = prev.project.constructionBudgetNgn || 330_000_000;
+        const totalEarnedNgn = updatedMilestones.reduce(
+          (sum, m) => sum + (m.progressPercentage / 100) * m.allocatedConstructionBudgetNgn,
+          0
+        );
+        const newOverallProgressPercentage = totalConstructionBudget > 0
+          ? Math.round((totalEarnedNgn / totalConstructionBudget) * 100)
+          : 0;
+
+        // Current active milestone
+        const activeMilestone =
+          updatedMilestones.find((m) => m.status === 'in_progress') ||
+          updatedMilestones.find((m) => m.status === 'upcoming') ||
+          updatedMilestones[updatedMilestones.length - 1];
+
+        const updatedProject = {
+          ...prev.project,
+          overallProgressPercentage: newOverallProgressPercentage,
+          currentMilestoneId: activeMilestone.id,
+          currentMilestoneName: `${activeMilestone.name}: ${activeMilestone.title}`,
+        };
+
+        return {
+          ...prev,
+          milestones: updatedMilestones,
+          project: updatedProject,
+          lastUpdated: new Date().toISOString(),
+        };
+      });
+    },
+    []
+  );
+
+  // Action: Add construction progress update (staff action)
+  // Appears automatically on Screen 4 (Customer Dashboard) and Screen 5 (Construction Progress)
+  const addProgressUpdate = useCallback(
+    (newUpdateData: Omit<ProgressUpdate, 'id'>) => {
+      const newUpdate: ProgressUpdate = {
+        ...newUpdateData,
+        id: `upd-${Date.now()}`,
+      };
+
+      setDemoData((prev) => ({
+        ...prev,
+        progressUpdates: [newUpdate, ...prev.progressUpdates],
+        project: {
+          ...prev.project,
+          lastInspectionDate: newUpdate.updateDate,
+        },
+        lastUpdated: new Date().toISOString(),
+      }));
+    },
+    []
+  );
+
+  // Action: Add simulated payment record (staff action)
+  // Reconciles project paid totals dynamically based strictly on confirmed_cleared status
+  const addPaymentRecord = useCallback(
+    (newPaymentData: Omit<PaymentRecord, 'id'>) => {
+      setDemoData((prev) => {
+        const newRecord: PaymentRecord = {
+          ...newPaymentData,
+          id: `pay-${Date.now()}`,
+        };
+
+        const updatedPayments = [newRecord, ...prev.paymentRecords];
+
+        // Strict Fiduciary Rule: Only qualifying confirmed/cleared records count toward paid totals
+        const cleared = updatedPayments.filter((r) => r.status === 'confirmed_cleared');
+        const clearedLand = cleared
+          .filter((r) => r.category === 'land')
+          .reduce((sum, r) => sum + r.amountNgn, 0);
+        const clearedConstruction = cleared
+          .filter((r) => r.category === 'construction')
+          .reduce((sum, r) => sum + r.amountNgn, 0);
+        const totalCleared = clearedLand + clearedConstruction;
+
+        const landBudget = prev.project.landBudgetNgn || 120_000_000;
+        const constructionBudget = prev.project.constructionBudgetNgn || 330_000_000;
+        const totalBudget = landBudget + constructionBudget;
+
+        const updatedProject = {
+          ...prev.project,
+          landPaidNgn: clearedLand,
+          constructionPaidNgn: clearedConstruction,
+          totalPaidNgn: totalCleared,
+          landRemainingNgn: Math.max(0, landBudget - clearedLand),
+          constructionRemainingNgn: Math.max(0, constructionBudget - clearedConstruction),
+          totalRemainingNgn: Math.max(0, totalBudget - totalCleared),
+        };
+
+        return {
+          ...prev,
+          paymentRecords: updatedPayments,
+          project: updatedProject,
+          lastUpdated: new Date().toISOString(),
+        };
+      });
+    },
+    []
+  );
+
+  // Action: Update existing payment record status (staff action)
+  // Re-derives land, construction, and total paid totals strictly from confirmed_cleared records
+  const updatePaymentRecord = useCallback(
+    (
+      paymentId: string,
+      updates: {
+        status: PaymentRecord['status'];
+        illustrativeNote?: string;
+      }
+    ) => {
+      setDemoData((prev) => {
+        const target = prev.paymentRecords.find((p) => p.id === paymentId);
+        if (!target) return prev;
+
+        const updatedPayments = prev.paymentRecords.map((p) => {
+          if (p.id !== paymentId) return p;
+          return {
+            ...p,
+            status: updates.status,
+            illustrativeNote:
+              updates.illustrativeNote !== undefined ? updates.illustrativeNote : p.illustrativeNote,
+          };
+        });
+
+        // Strict Fiduciary Rule: Only qualifying confirmed/cleared records count toward paid totals
+        const cleared = updatedPayments.filter((r) => r.status === 'confirmed_cleared');
+        const clearedLand = cleared
+          .filter((r) => r.category === 'land')
+          .reduce((sum, r) => sum + r.amountNgn, 0);
+        const clearedConstruction = cleared
+          .filter((r) => r.category === 'construction')
+          .reduce((sum, r) => sum + r.amountNgn, 0);
+        const totalCleared = clearedLand + clearedConstruction;
+
+        const landBudget = prev.project.landBudgetNgn || 120_000_000;
+        const constructionBudget = prev.project.constructionBudgetNgn || 330_000_000;
+        const totalBudget = landBudget + constructionBudget;
+
+        const updatedProject = {
+          ...prev.project,
+          landPaidNgn: clearedLand,
+          constructionPaidNgn: clearedConstruction,
+          totalPaidNgn: totalCleared,
+          landRemainingNgn: Math.max(0, landBudget - clearedLand),
+          constructionRemainingNgn: Math.max(0, constructionBudget - clearedConstruction),
+          totalRemainingNgn: Math.max(0, totalBudget - totalCleared),
+        };
+
+        return {
+          ...prev,
+          paymentRecords: updatedPayments,
+          project: updatedProject,
+          lastUpdated: new Date().toISOString(),
+        };
+      });
+    },
+    []
+  );
+
   const selectedProperty =
     demoData.properties.find((p) => p.id === selectedPropertyId) || demoData.properties[0];
 
@@ -200,6 +443,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         enquiries: demoData.enquiries,
         resetDemoData,
         addEnquiry,
+        updateEnquiryStatus,
+        updateMilestone,
+        addProgressUpdate,
+        addPaymentRecord,
+        updatePaymentRecord,
         isResetNotificationVisible,
         dismissResetNotification,
       }}

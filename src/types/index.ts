@@ -238,9 +238,10 @@ export interface PropertyEnquiry {
   interestType: 'Outright Purchase & Construction' | 'Land Acquisition Only' | 'Custom Villa Build';
   proposedTimeline: string;
   budgetRange?: string;
+  paymentPreference?: string;
   message: string;
   submittedAt: string;
-  status: 'new' | 'contacted' | 'consultation_scheduled' | 'dossier_sent';
+  status: 'new' | 'contacted' | 'qualified' | 'closed' | 'consultation_scheduled' | 'dossier_sent';
   notes?: string;
 }
 
